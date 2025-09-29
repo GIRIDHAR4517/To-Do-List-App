@@ -1,9 +1,10 @@
 import React from "react";
 import { TaskViewer } from "../TaskViewer";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const user = JSON.parse(localStorage.getItem("loggedinUsers"));
-  console.log(user);
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-blue-50 via-white to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-6">
@@ -31,7 +32,7 @@ export const Home = () => {
         <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">
           📝 Your Tasks
         </h3>
-        { user? <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 ">
+        { user? <div onClick={()=>navigate("/TaskViewer")} className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 ">
           <TaskViewer />
         </div> :<h1 className="text-8xl font-bold text-white">Login to View Tasks</h1>}
       </div>

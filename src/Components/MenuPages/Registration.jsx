@@ -4,6 +4,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
+import { NavLink } from 'react-router-dom'
 
 const api_path = 'http://localhost:3001/api/add-users'
 
@@ -101,7 +102,7 @@ export const Registration = () => {
 
       
         <p className="text-sm text-center text-gray-600 dark:text-gray-300">
-          Already have an account? <span className="text-indigo-500 dark:text-indigo-400 cursor-pointer hover:underline">Login</span>
+          Already have an account? <span className="text-indigo-500 dark:text-indigo-400 cursor-pointer hover:underline"><NavLink to="/Login">Login</NavLink></span>
         </p>
       </form>
     </section>

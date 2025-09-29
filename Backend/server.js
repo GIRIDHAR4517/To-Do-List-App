@@ -62,7 +62,27 @@ app.get('/api/add-users', async (req , res)=>{
             error : error.message
         });
     }
-})
+});
+
+app.get('/api/add-tasks/:id', async (req, res) => {
+  try {
+    const { id } = req.params;   
+    const sql = "SELECT * FROM tasks WHERE task_id = ?";
+    const [rows] = await pool.execute(sql, [id]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    res.json(rows[0]); 
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong",
+      error: error.message
+    });
+  }
+});
+
 
 app.get('/api/add-tasks' , async(req , res)=>{
     try{
@@ -104,6 +124,84 @@ app.post('/api/add-tasks', async (req , res)=>{
         })
     }
 })
+
+
+app.patch('/api/add-tasks/:id', async (req, res) => {
+  const { id } = req.params;
+  const { is_completed, title, description, category_id, priority_id, due_date } = req.body;
+
+  try {
+  
+    let fields = [];
+    let values = [];
+
+    if (is_completed !== undefined) {
+      fields.push("is_completed = ?");
+      values.push(is_completed);
+    }
+    if (title) {
+      fields.push("title = ?");
+      values.push(title);
+    }
+    if (description) {
+      fields.push("description = ?");
+      values.push(description);
+    }
+    if (category_id) {
+      fields.push("category_id = ?");
+      values.push(category_id);
+    }
+    if (priority_id) {
+      fields.push("priority_id = ?");
+      values.push(priority_id);
+    }
+    if (due_date) {
+      fields.push("due_date = ?");
+      values.push(due_date);
+    }
+
+    if (fields.length === 0) {
+      return res.status(400).json({ message: "No fields provided for update" });
+    }
+
+    const sql = `UPDATE tasks SET ${fields.join(", ")}, updated_at = NOW() WHERE task_id = ?`;
+    values.push(id);
+
+    const [result] = await pool.execute(sql, values);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    res.json({ message: "Task updated successfully", taskId: id });
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong",
+      error: error.message
+    });
+  }
+});
+
+app.delete('/api/add-tasks/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const sql = "DELETE FROM tasks WHERE task_id = ?";
+    const [result] = await pool.execute(sql, [id]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    res.json({ message: "Task deleted successfully ✅" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong ❌",
+      error: error.message
+    });
+  }
+});
+
 
 app.listen(port , ()=>{
     console.log(`running at http://localhost:${port}`);

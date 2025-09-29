@@ -50,12 +50,12 @@ export const Login = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 via-white to-cyan-100">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-500 via-white to-cyan-500">
       <form
         onSubmit={handleLogin}
         className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8 space-y-6 border border-gray-200"
       >
-        {/* Header */}
+        
         <h2 className="text-2xl font-bold text-center text-blue-700">
           Welcome Back 👋
         </h2>
@@ -63,7 +63,7 @@ export const Login = () => {
           Please login to continue
         </p>
 
-        {/* Username */}
+        
         <div>
           <label className="block text-gray-600 mb-1 text-sm font-medium">
             Username
@@ -78,7 +78,7 @@ export const Login = () => {
           />
         </div>
 
-        {/* Password */}
+       
         <div className="relative">
           <label className="block text-gray-600 mb-1 text-sm font-medium">
             Password
@@ -100,7 +100,7 @@ export const Login = () => {
           </button>
         </div>
 
-        {/* Submit */}
+        
         <button
           type="submit"
           className="w-full bg-blue-600 text-white p-3 rounded-xl font-semibold shadow-md hover:bg-blue-700 transition duration-200"
@@ -108,7 +108,7 @@ export const Login = () => {
           Login
         </button>
 
-        {/* Footer */}
+        
         <p className="text-sm text-center text-gray-500">
           Don’t have an account?{" "}
           <span

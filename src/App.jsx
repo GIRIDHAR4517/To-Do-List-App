@@ -9,7 +9,7 @@ import { Toaster } from 'react-hot-toast'
 import { RootLayout } from './RootLayout'
 import { Home } from './Components/MenuPages/Home'
 import { Tasks } from './Components/MenuPages/Tasks'
-import { TaskViewer } from './Components/TaskViewer'
+import { TaskStatus, TaskViewer } from './Components/TaskViewer'
 
 function App() {
   const route = createBrowserRouter([
@@ -21,7 +21,12 @@ function App() {
         {path:"Login", element:<Login/>},
         {path:'Register',element:<Registration/>},
         {path:'Tasks',element:<Tasks/>},
-        {path:'TaskViewer' , element:<TaskViewer/>}
+        {path:'TaskViewer' , element:<TaskViewer/>,
+          children :[
+            {path:':id',element:<TaskStatus/>}
+          ]
+        }
+        
       ]
     }
   ])
