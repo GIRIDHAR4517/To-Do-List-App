@@ -5,31 +5,21 @@ import toast from 'react-hot-toast'
 import { useAuth } from '../../../Backend/useAuth'
 import { useNavigate } from 'react-router-dom'
 
-const api_path = 'http://localhost:3001/api/add-users'
+
 
 export const Login = () => {
   const navigate = useNavigate()
   const [passwordVisibility, toggle] = useToggle()
-  const [isLoggedIn, setLogin] = useAuth()
-  const [users, setUsers] = useState([])
+  const {isLoggedIn, setLogin} = useAuth()
+  
   const [loginData, setLoginData] = useState({ uname: "", password: "" })
-
+  const {users} = useAuth();
   const handleOnchange = (e) => {
     const { name, value } = e.target
     setLoginData({ ...loginData, [name]: value })
   }
 
-  useEffect(() => {
-    async function fetcher() {
-      try {
-        let res = await axios.get(api_path)
-        setUsers(res.data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetcher()
-  }, [])
+
 
   const handleLogin = (e) => {
     e.preventDefault()

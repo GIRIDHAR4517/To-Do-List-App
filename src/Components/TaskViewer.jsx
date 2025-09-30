@@ -5,7 +5,7 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast/headless";
 
 export const TaskViewer = () => {
-  const [, , tasks] = useAuth();
+  const {tasks} =useAuth();
   const [expandedRow, setExpandedRow] = useState(null);
 
   const handleRowClick = (taskId) => {
@@ -105,7 +105,8 @@ export const TaskViewer = () => {
 };
 
 export function TaskStatus({ taskId, onClose }) {
-  const [, , tasks, setTasks] = useAuth();
+
+  const {tasks, setTasks} = useAuth();
   const [status, setStatus] = useState({ status: "" });
 
   const task = tasks.find((t) => t.task_id === taskId);
@@ -114,7 +115,7 @@ export function TaskStatus({ taskId, onClose }) {
   const handleUpdate = async () => {
     try {
       await axios.patch(
-        `http://localhost:3001/api/add-tasks/${taskId}`,
+        `${api_base}/api/add-tasks/${taskId}`,
         { is_completed: status.status },
         { headers: { "Content-Type": "application/json" } }
       );

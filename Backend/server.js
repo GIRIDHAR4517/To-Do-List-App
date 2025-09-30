@@ -3,12 +3,8 @@ import express, { json } from 'express';
 import cors from 'cors';
 import mysql from 'mysql2/promise';
 
-
-
-
 const app = express();
 const port = 3001;
-
 
 const dbConfig ={
     host :"localhost",

@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 export const Tasks = () => {
   const user = JSON.parse(localStorage.getItem("loggedinUsers"));
-
+  
   const [tasks, addTasks] = useState({
     title: "",
     description: "",
@@ -19,7 +19,7 @@ export const Tasks = () => {
     const { name, value } = e.target;
     addTasks({ ...tasks, [name]: value });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 

@@ -5,20 +5,34 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom'
+import { useAuth } from '../../../Backend/useAuth'
 
 const api_path = 'http://localhost:3001/api/add-users'
 
 export const Registration = () => {
+  const {users} = useAuth();
   const [passwordVisibility, toggle] = useToggle()
   const [formData, setFormData] = useState({ Name: "", userName: "", email: "", password: "" })
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
+
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const isUserExist = users.some(t => t.username === formData.userName)
+    const isEmailExist = users.some(t=>t.email === formData.email);
+    if(isUserExist){
+      toast.error('❌ Username already exist please try new one ');
+      return;
+    }
+    if(isEmailExist){
+      toast.error('❌ Email already Registered ');
+      return;
+
+    }
     try {
       await axios.post(api_path, formData, { headers: { 'Content-Type': 'application/json' } })
       toast.success("Registered Successfully ✅")
