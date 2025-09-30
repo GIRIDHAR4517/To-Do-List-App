@@ -30,7 +30,7 @@ export const Home = () => {
       
       <div className="w-full max-w-4xl mt-10">
         <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">
-          📝 Your Tasks
+          📝 Things To Do
         </h3>
         { user? <div onClick={()=>navigate("/TaskViewer")} className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 ">
           <TaskViewer />

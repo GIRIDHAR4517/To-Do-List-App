@@ -5,7 +5,7 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast/headless";
 
 export const TaskViewer = () => {
-  const {tasks} =useAuth();
+  const { tasks } = useAuth();
   const [expandedRow, setExpandedRow] = useState(null);
 
   const handleRowClick = (taskId) => {
@@ -96,17 +96,36 @@ export const TaskViewer = () => {
       </div>
     </section>
   ) : (
-    <div className="flex items-center justify-center min-h-screen bg-black">
-      <h1 className="text-lg font-semibold text-gray-600 dark:text-gray-300 animate-pulse">
-        No Task Present Now...
-      </h1>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 px-6 rounded-2xl">
+      <div className="bg-gray-800/70 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-gray-700 max-w-lg w-full text-center">
+        <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 animate-pulse">
+          No Tasks Present 🚀
+        </h1>
+        <p className="mt-3 text-gray-300">
+          Since you don’t have anything to do, here are some good habits ✨
+        </p>
+
+        <ul className="mt-6 space-y-3 text-left text-gray-200 font-medium">
+          <li className="flex items-center gap-3">
+            <span className="text-green-400 text-xl">💧</span>
+            Drink 5 liters of water daily
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="text-pink-400 text-xl">🏋️</span>
+            Do a workout daily
+          </li>
+          <li className="flex items-center gap-3">
+            <span className="text-yellow-400 text-xl">🙏</span>
+            Be thankful
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };
 
 export function TaskStatus({ taskId, onClose }) {
-
-  const {tasks, setTasks} = useAuth();
+  const { tasks, setTasks } = useAuth();
   const [status, setStatus] = useState({ status: "" });
 
   const task = tasks.find((t) => t.task_id === taskId);
@@ -115,7 +134,7 @@ export function TaskStatus({ taskId, onClose }) {
   const handleUpdate = async () => {
     try {
       await axios.patch(
-        `${api_base}/api/add-tasks/${taskId}`,
+        `http://localhost:3001/api/add-tasks/${taskId}`,
         { is_completed: status.status },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -145,7 +164,7 @@ export function TaskStatus({ taskId, onClose }) {
   return (
     <section className="relative p-6 bg-gradient-to-r from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
       <button
-        className="absolute top-3 right-3 text-xl font-bold text-red-600 hover:text-red-800 transition"
+        className="absolute top-3 right-3 text-xl font-bold text-red-600 hover:text-red-800 transition cursor-pointer"
         onClick={onClose}
       >
         ❌
@@ -186,7 +205,7 @@ export function TaskStatus({ taskId, onClose }) {
         </button>
 
         <button
-          className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-xl shadow-md transition duration-200"
+          className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-xl shadow-md transition duration-200 "
           onClick={handleDelete}
         >
           Delete

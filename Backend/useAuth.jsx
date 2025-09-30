@@ -11,10 +11,11 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setLogin] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [users, setUsers] = useState([]);
+  const [currentUser , setCurrentUser] =useState(null);
 
   useEffect(() => {
     const login = JSON.parse(localStorage.getItem("loggedinUsers"));
-
+    setCurrentUser(login);
     if (login) {
       setLogin(true);
     }
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }) => {
       setTasks(res.data);
     }
     fetcher();
-  }, []);
+  }, [tasks]);
 
   const data ={
     isLoggedIn : isLoggedIn,
@@ -46,8 +47,9 @@ export const AuthProvider = ({ children }) => {
     tasks : tasks,
     setTasks :setTasks,
     users : users,
-    setUsers : users
-
+    setUsers : users,
+    currentUser:currentUser,
+    setCurrentUser:setCurrentUser
   }
 
   return (

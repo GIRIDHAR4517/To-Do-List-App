@@ -29,7 +29,7 @@ app.post('/api/add-users', async (req , res)=>{
     
         const sql = 'Insert into users( username , email , password_hash ,Name) values(? ,? ,? ,?)';
 
-        const [result] = await pool.execute(sql , [userName ,email ,password ,Name])
+        const [result] = await pool.execute(sql , [userName ,email ,password ,Name]); 
 
             res.status(201).json({
             message: 'User successfully  saved to DB',
@@ -201,4 +201,4 @@ app.delete('/api/add-tasks/:id', async (req, res) => {
 
 app.listen(port , ()=>{
     console.log(`running at http://localhost:${port}`);
-})
+});

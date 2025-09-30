@@ -4,10 +4,12 @@ import { useAuth } from "../../../Backend/useAuth";
 import { FaHome, FaTasks, FaSignOutAlt, FaSignInAlt, FaUserPlus } from "react-icons/fa";
 
 export const Navbar = () => {
-  const {isLoggedIn, setLogin} = useAuth();
-
+  const {isLoggedIn, setLogin ,setCurrentUser} = useAuth();
+  
   const handleLogout = () => {
+    setCurrentUser(null);
     setLogin(false);
+    
     localStorage.removeItem("loggedinUsers");
   };
 

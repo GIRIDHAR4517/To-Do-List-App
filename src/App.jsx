@@ -10,6 +10,7 @@ import { RootLayout } from './RootLayout'
 import { Home } from './Components/MenuPages/Home'
 import { Tasks } from './Components/MenuPages/Tasks'
 import { TaskStatus, TaskViewer } from './Components/TaskViewer'
+import { PublicRoutes } from './Components/PublicRoutes'
 
 function App() {
   const route = createBrowserRouter([
@@ -18,7 +19,8 @@ function App() {
       element:<RootLayout/>,
       children:[
         {index:true , element:<Home/>},
-        {path:"Login", element:<Login/>},
+        {path:"Login", element:(
+        <PublicRoutes><Login/></PublicRoutes> )},
         {path:'Register',element:<Registration/>},
         {path:'Tasks',element:<Tasks/>},
         {path:'TaskViewer' , element:<TaskViewer/>,
