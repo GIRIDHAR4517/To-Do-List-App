@@ -2,9 +2,10 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../../Backend/useAuth';
 
 export const Tasks = () => {
-  const user = JSON.parse(localStorage.getItem("loggedinUsers"));
+  const {currentUser} =useAuth();
   
   const [tasks, addTasks] = useState({
     title: "",
@@ -12,7 +13,7 @@ export const Tasks = () => {
     category: "",
     priority: "",
     Deadline: "",
-    userId: `${user.user_id}`,
+    userId: `${currentUser.user_id}`,
   });
 
   const hanldeChange = (e) => {

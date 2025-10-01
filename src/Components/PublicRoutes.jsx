@@ -10,7 +10,6 @@ export const PublicRoutes = ({ children }) => {
 
   useEffect(() => {
     if (currentUser) {
-      toast.error("Unauthorized Action ❌");
       navigate("/"); 
     }
   }, [currentUser, navigate]);

@@ -71,8 +71,8 @@ export const TaskViewer = () => {
                   </td>
                   <td className="px-6 py-4 text-gray-600 dark:text-gray-400">
                     {data.is_completed === 0
-                      ? new Date(data.due_date).toLocaleDateString("en-IN") >
-                        new Date().toLocaleDateString("en-IN")
+                      ? new Date(data.due_date) <
+                        new Date()
                         ? "Due Date Crossed"
                         : "pending"
                       : "completed"}

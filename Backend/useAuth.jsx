@@ -15,7 +15,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const login = JSON.parse(localStorage.getItem("loggedinUsers"));
-    setCurrentUser(login);
     if (login) {
       setLogin(true);
     }
@@ -47,7 +46,7 @@ export const AuthProvider = ({ children }) => {
     tasks : tasks,
     setTasks :setTasks,
     users : users,
-    setUsers : users,
+    setUsers : setUsers,
     currentUser:currentUser,
     setCurrentUser:setCurrentUser
   }

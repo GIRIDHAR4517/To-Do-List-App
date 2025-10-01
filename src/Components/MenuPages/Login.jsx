@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 export const Login = () => {
   const navigate = useNavigate()
   const [passwordVisibility, toggle] = useToggle()
-  const {isLoggedIn, setLogin} = useAuth()
+  const {isLoggedIn, setLogin , setCurrentUser} = useAuth()
   
   const [loginData, setLoginData] = useState({ uname: "", password: "" })
   const {users} = useAuth();
@@ -30,6 +30,7 @@ export const Login = () => {
     if (matchedUsers) {
       localStorage.setItem("loggedinUsers", JSON.stringify(matchedUsers))
       setLogin(true)
+      setCurrentUser(matchedUsers)
       toast.success("Login successful ✅")
       navigate('/')
     } else {
