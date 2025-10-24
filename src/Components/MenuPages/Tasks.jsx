@@ -6,14 +6,17 @@ import { useAuth } from '../../../Backend/useAuth';
 
 export const Tasks = () => {
   const {currentUser} =useAuth();
-  
+  const initialUserId = currentUser ? currentUser.userid : "";
+ 
+  console.log(initialUserId);
+
   const [tasks, addTasks] = useState({
     title: "",
     description: "",
     category: "",
     priority: "",
-    Deadline: "",
-    userId: `${currentUser.user_id}`,
+    dueDate : "",
+    userid: initialUserId,
   });
 
   const hanldeChange = (e) => {
@@ -21,11 +24,18 @@ export const Tasks = () => {
     addTasks({ ...tasks, [name]: value });
   };
   
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
     e.preventDefault();
+     console.log(tasks);
+    // 3. Add a check before submitting to prevent posting tasks without a user ID
+    if (!currentUser || !currentUser.userid) {
+        toast.error("User not logged in. Cannot add task.");
+        return; // Stop the submission
+    }
 
     try {
-      const res = await axios.post("http://localhost:3001/api/add-tasks", tasks, {
+      // The rest of your submission logic...
+      const res = await axios.post("https://to-do-list-app-backend-spring.onrender.com/api/tasks", tasks, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -36,15 +46,17 @@ export const Tasks = () => {
       toast.error("Failed to Add Task");
     }
 
+    
     addTasks({
       title: "",
       description: "",
       category: "",
       priority: "",
-      Deadline: "",
-      userId: `${user.user_id}`,
+      dueDate: "",
+      userid: currentUser.userid, 
     });
   };
+ 
 
   return (
     <>
@@ -122,10 +134,10 @@ export const Tasks = () => {
           </label>
           <input
             type="date"
-            name="Deadline"
+            name="dueDate"
             id="Deadline"
             onChange={hanldeChange}
-            value={tasks.Deadline}
+            value={tasks.dueDate}
             className="border p-2 rounded-lg focus:ring-2 focus:ring-blue-400 cursor-pointer"
           />
 

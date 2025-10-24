@@ -7,12 +7,12 @@ import { FiEye, FiEyeOff } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../../../Backend/useAuth'
 
-const api_path = 'http://localhost:3001/api/add-users'
+const api_path = 'https://to-do-list-app-backend-spring.onrender.com/api/users'
 
 export const Registration = () => {
   const {users} = useAuth();
   const [passwordVisibility, toggle] = useToggle()
-  const [formData, setFormData] = useState({ Name: "", userName: "", email: "", password: "" })
+  const [formData, setFormData] = useState({ name: "", username: "", email: "", password: "" })
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -22,7 +22,7 @@ export const Registration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const isUserExist = users.some(t => t.username === formData.userName)
+    const isUserExist = users.some(t => t.username === formData.username)
     const isEmailExist = users.some(t=>t.email === formData.email);
     if(isUserExist){
       toast.error('❌ Username already exist please try new one ');
@@ -40,7 +40,7 @@ export const Registration = () => {
       toast.error("All fields are required ❌")
       console.log(error)
     }
-    setFormData({ Name: "", userName: "", email: "", password: "" })
+    setFormData({ name: "", username: "", email: "", password: "" })
   }
 
   return (
@@ -56,8 +56,8 @@ export const Registration = () => {
         <div className="relative">
           <input
             type="text"
-            name="Name"
-            value={formData.Name}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             placeholder="Full Name"
             className="w-full bg-white/30 dark:bg-gray-700/40 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-300 border border-gray-300 dark:border-gray-600 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm transition"
@@ -67,8 +67,8 @@ export const Registration = () => {
         <div className="relative">
           <input
             type="text"
-            name="userName"
-            value={formData.userName}
+            name="username"
+            value={formData.username}
             onChange={handleChange}
             placeholder="Username"
             className="w-full bg-white/30 dark:bg-gray-700/40 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-300 border border-gray-300 dark:border-gray-600 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm transition"

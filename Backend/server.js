@@ -1,3 +1,4 @@
+
 import express, { json } from 'express';
 import cors from 'cors';
 import mysql from 'mysql2/promise';
@@ -14,6 +15,7 @@ const dbConfig ={
 };
 
 const pool = mysql.createPool(dbConfig);
+
 app.use(cors());
 
 app.use(json());
@@ -58,6 +60,23 @@ app.get('/api/add-users', async (req , res)=>{
         });
     }
 });
+
+app.get('/api/add-users/:id' , async (req , res)=>{
+  try{
+    const {id} = req.params;
+   
+
+    const sql = "Select * from users where user_id = ?"
+
+    const [row] = await pool.execute(sql , [id]);
+
+    if(row.length ===0 ) res.status(404).json({message:"User Not Found"});
+    res.json(row[0]);
+  }catch(err){
+    res.status(500).json({message:"Something went wrong " , error: err.message})
+  }
+})
+
 
 app.get('/api/add-tasks/:id', async (req, res) => {
   try {

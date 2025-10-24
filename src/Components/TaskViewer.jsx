@@ -6,6 +6,7 @@ import toast from "react-hot-toast/headless";
 
 export const TaskViewer = () => {
   const { tasks } = useAuth();
+  console.log(tasks);
   const [expandedRow, setExpandedRow] = useState(null);
 
   const handleRowClick = (taskId) => {
@@ -38,10 +39,10 @@ export const TaskViewer = () => {
 
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {tasks.map((data) => (
-              <React.Fragment key={data.task_id}>
+              <React.Fragment key={data.taskId}>
                 <tr
                   className="hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-200 cursor-pointer"
-                  onClick={() => handleRowClick(data.task_id)}
+                  onClick={() => handleRowClick(data.taskId)}
                 >
                   <td className="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">
                     {data.title}
@@ -50,28 +51,28 @@ export const TaskViewer = () => {
                     {data.description}
                   </td>
                   <td className="px-6 py-4 text-gray-600 dark:text-gray-400">
-                    {new Date(data.due_date).toLocaleDateString("en-IN")}
+                    {new Date(data.dueDate).toLocaleDateString("en-IN")}
                   </td>
                   <td className="px-6 py-4">
                     <span
                       className={`px-3 py-1 text-xs font-semibold rounded-full shadow-md border ${
-                        data.priority_id === 1
+                        data.priority === 1
                           ? "bg-green-100 text-green-700 border-green-400"
-                          : data.priority_id === 2
+                          : data.priority === 2
                           ? "bg-yellow-100 text-yellow-700 border-yellow-400"
                           : "bg-red-100 text-red-700 border-red-400 animate-pulse"
                       }`}
                     >
-                      {data.priority_id === 1
+                      {data.priority === 1
                         ? "Low"
-                        : data.priority_id === 2
+                        : data.priority === 2
                         ? "Medium"
                         : "High"}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-gray-600 dark:text-gray-400">
-                    {data.is_completed === 0
-                      ? new Date(data.due_date) <
+                    {data.isCompleted === 0
+                      ? new Date(data.dueDate) <
                         new Date()
                         ? "Due Date Crossed"
                         : "pending"
@@ -79,11 +80,11 @@ export const TaskViewer = () => {
                   </td>
                 </tr>
 
-                {expandedRow === data.task_id && (
+                {expandedRow === data.taskId && (
                   <tr>
                     <td colSpan={5} className="bg-gray-50 dark:bg-gray-700 p-4">
                       <TaskStatus
-                        taskId={data.task_id}
+                        taskId={data.taskId}
                         onClose={() => setExpandedRow(null)}
                       />
                     </td>
@@ -128,20 +129,20 @@ export function TaskStatus({ taskId, onClose }) {
   const { tasks, setTasks } = useAuth();
   const [status, setStatus] = useState({ status: "" });
 
-  const task = tasks.find((t) => t.task_id === taskId);
+  const task = tasks.find((t) => t.taskId === taskId);
   if (!task) return <h1>No Task Found</h1>;
 
   const handleUpdate = async () => {
     try {
       await axios.patch(
-        `http://localhost:3001/api/add-tasks/${taskId}`,
-        { is_completed: status.status },
+        `https://to-do-list-app-backend-spring.onrender.com/api/task/${taskId}`,
+        { isCompleted: status.status },
         { headers: { "Content-Type": "application/json" } }
       );
       toast.success("Updated Successfully ✅");
       setTasks(
         tasks.map((t) =>
-          t.task_id === taskId ? { ...t, is_completed: status.status } : t
+          t.taskId === taskId ? { ...t, isCompleted: status.status } : t
         )
       );
       onClose();
@@ -152,9 +153,10 @@ export function TaskStatus({ taskId, onClose }) {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3001/api/add-tasks/${taskId}`);
+      await axios.delete(`https://to-do-list-app-backend-spring.onrender.com/api/task/${taskId}`);
       toast.success("Task deleted ✅");
-      setTasks(tasks.filter((task) => task.task_id !== taskId));
+      
+      setTasks(tasks.filter((task) => task.taskId !== taskId));
       onClose();
     } catch (error) {
       toast.error(`Failed to delete ❌: ${error.message}`);

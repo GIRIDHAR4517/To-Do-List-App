@@ -10,21 +10,18 @@ import { useNavigate } from 'react-router-dom'
 export const Login = () => {
   const navigate = useNavigate()
   const [passwordVisibility, toggle] = useToggle()
-  const {isLoggedIn, setLogin , setCurrentUser} = useAuth()
+  const {isLoggedIn, setLogin , setCurrentUser ,users} = useAuth()
   
   const [loginData, setLoginData] = useState({ uname: "", password: "" })
-  const {users} = useAuth();
+  
   const handleOnchange = (e) => {
     const { name, value } = e.target
     setLoginData({ ...loginData, [name]: value })
   }
-
-
-
   const handleLogin = (e) => {
     e.preventDefault()
     const matchedUsers = users.find(
-      user => user.username === loginData.uname && user.password_hash === loginData.password
+      user => user.username === loginData.uname && user.password === loginData.password
     )
 
     if (matchedUsers) {

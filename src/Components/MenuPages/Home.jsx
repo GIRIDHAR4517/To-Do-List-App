@@ -15,7 +15,7 @@ export const Home = () => {
         {currentUser ? (
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
             👋 Welcome back,{" "}
-            <span className="text-blue-600 dark:text-blue-400">{currentUser.Name}</span>!
+            <span className="text-blue-600 dark:text-blue-400">{currentUser.name}</span>!
           </h1>
         ) : (
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
