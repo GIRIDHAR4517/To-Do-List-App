@@ -4,6 +4,7 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 import { useAuth } from '../../../Backend/useAuth'
 import { useNavigate } from 'react-router-dom'
+import NAVIGATION from '../../Routes'
 
 
 
@@ -100,7 +101,7 @@ export const Login = () => {
         <p className="text-sm text-center text-gray-500">
           Don’t have an account?{" "}
           <span
-            onClick={() => navigate("/Register")}
+            onClick={() => navigate(NAVIGATION.REGISTER)}
             className="text-blue-600 cursor-pointer hover:underline"
           >
             Register
