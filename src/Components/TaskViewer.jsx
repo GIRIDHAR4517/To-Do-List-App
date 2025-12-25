@@ -6,7 +6,6 @@ import toast from "react-hot-toast/headless";
 
 export const TaskViewer = () => {
   const { tasks } = useAuth();
-  console.log(tasks);
   const [expandedRow, setExpandedRow] = useState(null);
 
   const handleRowClick = (taskId) => {
